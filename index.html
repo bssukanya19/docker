@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Compose Application</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Docker Compose Multi-Service Application</h1>
+
+<p>Frontend container is running successfully.</p>
+
+<button onclick="loadUsers()">Get Users From Backend</button>
+
+<div id="result"></div>
+
+<script>
+
+function loadUsers() {
+
+    fetch("/api/users")
+        .then(response => response.json())
+        .then(data => {
+
+            let output = "<h2>Users From MySQL Database</h2>";
+
+            data.forEach(user => {
+                output += `<p>${user.id} - ${user.name} - ${user.email}</p>`;
+            });
+
+            document.getElementById("result").innerHTML = output;
+
+        })
+        .catch(error => {
+            document.getElementById("result").innerHTML =
+                "Error connecting to backend";
+        });
+}
+
+</script>
+
+</body>
+</html>
